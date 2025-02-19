@@ -35,4 +35,5 @@ jobs:
         cd godot
         scons -j 4 p=windows target=template_release tools=no bits=64
         cp bin/godot.windows.opt.64.exe templates/windows_64_release.exe
+        update-alternatives --config x86_64-w64-mingw32-g++
         x86_64-w64-mingw32-strip templates/windows_64_release.exe
