@@ -15,6 +15,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Clone Godot Engine Source
+      run: |
+        git clone https://github.com/godotengine/godot.git
+        cd godot
+        git checkout 4.3
+
     - name: Install SCons
       run: |
         # Install SCons using pip
@@ -28,6 +34,7 @@ jobs:
   
     - name: Build Godot (Release)
       run: |
+        cd godot
         scons -j 4 p=windows target=release tools=no bits=64
         cp bin/godot.windows.opt.64.exe templates/windows_64_release.exe
         x86_64-w64-mingw32-strip templates/windows_64_release.exe
