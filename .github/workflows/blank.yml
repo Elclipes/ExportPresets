@@ -27,9 +27,9 @@ jobs:
 
     - name: Install MinGW
       run: |
-        sudo apt-get update
-        sudo apt-get install -y mingw-w64
-        update-alternatives --config x86_64-w64-mingw32-g++
+        apt-get update
+        apt-get install -y mingw-w64
+        update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
   
     - name: Build Godot (Release)
       run: |
