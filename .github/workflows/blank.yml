@@ -17,16 +17,19 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Install Chocolatey
+      shell: pwsh  # Use PowerShell Core
       run: |
         # Install Chocolatey without Set-ExecutionPolicy
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
         Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
-    - name: Set up SCons
+    - name: Install SCons using Chocolatey
+      shell: pwsh  # Use PowerShell Core
       run: |
         choco install scons -y  # Install SCons using Chocolatey
 
-    - name: Set up MinGW
+    - name: Install MinGW using Chocolatey
+      shell: pwsh  # Use PowerShell Core
       run: |
         choco install mingw -y  # Install MinGW using Chocolatey
   
