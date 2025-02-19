@@ -10,6 +10,7 @@ env:
 jobs:
   build-export-templates:
     name: Build Android Debug
+    container: ubuntu:22.04
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
