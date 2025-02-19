@@ -1,0 +1,33 @@
+name: "Build Export Templates"
+on: push
+
+# NOTE: If your `project.godot` is at the repository root, set `PROJECT_PATH` below to ".".
+
+env:
+  GODOT_VERSION: 4.3
+  EXPORT_NAME: Zombie TD
+  PROJECT_PATH: .
+
+jobs:
+  build-export-templates:
+    name: Build Android Debug
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: create template
+        run: |
+          rm -rf templates
+          mkdir -p templates
+      - name: Windows Template
+        run: |
+          scons -j 4 p=windows target=release tools=no bits=64
+          cp bin/godot.windows.opt.64.exe templates/windows_64_release.exe
+          x86_64-w64-mingw32-strip templates/windows_64_release.exe
+          scons -j 4 p=windows target=release_debug tools=no bits=64
+          cp bin/godot.windows.opt.debug.64.exe templates/windows_64_debug.exe
+          x86_64-w64-mingw32-strip templates/windows_64_debug.exe
