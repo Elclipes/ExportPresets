@@ -10,28 +10,21 @@ env:
 jobs:
   build-export-templates:
     name: Build Android Debug
-    container: ubuntu:22.04
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install Chocolatey
-      shell: pwsh  # Use PowerShell Core
+    - name: Install SCons
       run: |
-        # Install Chocolatey without Set-ExecutionPolicy
-        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
-        Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        # Install SCons using pip
+        python3 -m pip install scons
 
-    - name: Install SCons using Chocolatey
-      shell: pwsh  # Use PowerShell Core
+    - name: Install MinGW (Cross-Compiler for Windows)
       run: |
-        choco install scons -y  # Install SCons using Chocolatey
-
-    - name: Install MinGW using Chocolatey
-      shell: pwsh  # Use PowerShell Core
-      run: |
-        choco install mingw -y  # Install MinGW using Chocolatey
+        # Install MinGW cross-compiler for Windows
+        sudo apt-get update
+        sudo apt-get install -y mingw-w64
   
     - name: Build Godot (Release)
       run: |
