@@ -54,6 +54,7 @@ jobs:
           mkdir -p platform/android/java/libs/x86
     - name: Build Export Android Debug
       run: |
+          cd godot
           scons -j 4 p=android target=template_debug
           cp bin/libgodot.android.opt.debug.so platform/android/java/libs/armeabi/libgodot_android.so
           ./gradlew build
