@@ -28,7 +28,7 @@ jobs:
     - name: Build Export Emcripten
       run: |
         cd godot
-        scons -j 4 p=javascript target=template_release
+        scons -j 4 p=web target=template_release
         cp bin/godot.javascript.opt.html godot.html
         cp bin/godot.javascript.opt.js godot.js
         cp tools/html_fs/filesystem.js .
