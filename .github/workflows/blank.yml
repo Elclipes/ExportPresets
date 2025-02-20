@@ -42,12 +42,12 @@ jobs:
         rm cmdline-tools.zip
         sudo chmod -R 777 /opt/android-sdk
         /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
-        /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;33.0.0" "platforms;android-33" "ndk;25.2.9519653"
+        /opt/android-sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;33.0.0" "platforms;android-33" "ndk;23.2.8568313"
 
     - name: Set Environment Variables
       run: |
         echo "ANDROID_HOME=/opt/android-sdk" >> $GITHUB_ENV
-        echo "ANDROID_NDK_ROOT=/opt/android-sdk/ndk/25.2.9519653" >> $GITHUB_ENV
+        echo "ANDROID_NDK_ROOT=/opt/android-sdk/ndk/23.2.8568313" >> $GITHUB_ENV
         echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
 
     - name: Create Dir
