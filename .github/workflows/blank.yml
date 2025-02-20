@@ -3,7 +3,7 @@ on: push
 
 jobs:
   build-export-templates:
-    name: Build Android Debug
+    name: Build Web Release
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -25,7 +25,16 @@ jobs:
         sudo apt-get install -y mingw-w64
         sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
 
-    - name: Build Export Emcripten
+    - name: Set Up Emscripten
+      run: |
+        git clone https://github.com/emscripten-core/emsdk.git
+        cd emsdk
+        ./emsdk install latest
+        ./emsdk activate latest
+        echo "EMSDK_PATH=$(pwd)" >> $GITHUB_ENV
+        echo "PATH=$(pwd)/upstream/emscripten:$(pwd):$PATH" >> $GITHUB_ENV
+
+    - name: Build Export Emscripten
       run: |
         cd godot
         scons -j 4 p=web target=template_release
