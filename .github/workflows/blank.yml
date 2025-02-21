@@ -29,13 +29,15 @@ jobs:
       run: |
         cd godot
         scons -j 4 p=windows target=template_release tools=no bits=64
-        cp bin/godot.windows.opt.64.exe templates/windows_64_release.exe
+        ls -la bin/
+        cp bin/godot.windows.template_release.x86_64.exe templates/windows_64_release.exe
         x86_64-w64-mingw32-strip templates/windows_64_release.exe
 
     - name: Build Export Template Linux
       run: |
         cd godot
         scons -j 4 p=x11 target=template_release tools=no bits=64
+        ls -la bin/
         cp bin/godot.x11.opt.64 templates/linux_x11_64_release
         upx templates/linux_x11_64_release
 
@@ -55,6 +57,7 @@ jobs:
         cp bin/godot.javascript.opt.html godot.html
         cp bin/godot.javascript.opt.js godot.js
         cp tools/html_fs/filesystem.js .
+        ls -la bin/
         zip javascript_release.zip godot.html godot.js filesystem.js
         mv javascript_release.zip templates/
 
@@ -92,6 +95,7 @@ jobs:
       run: |
         cd godot
         scons -j 4 p=android target=template_debug
+        
         cp bin/libgodot.android.opt.debug.so platform/android/java/libs/armeabi/libgodot_android.so
         ./gradlew build
         cp platform/android/java/build/outputs/apk/java-release-unsigned.apk templates/android_debug.apk
