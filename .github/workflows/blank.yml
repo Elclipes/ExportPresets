@@ -24,14 +24,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y mingw-w64
         sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
-  
-    - name: Build Export Template Linux
-      run: |
-        cd godot
-        scons -j 4 p=x11 target=template_release tools=no bits=64
-        ls -la bin/
-        cp bin/godot.x11.opt.64 templates/linux_x11_64_release
-        upx templates/linux_x11_64_release
 
     - name: Set Up Emscripten
       run: |
@@ -46,10 +38,10 @@ jobs:
       run: |
         cd godot
         scons -j 4 p=web target=template_release
+        ls -la bin/
         cp bin/godot.javascript.opt.html godot.html
         cp bin/godot.javascript.opt.js godot.js
         cp tools/html_fs/filesystem.js .
-        ls -la bin/
         zip javascript_release.zip godot.html godot.js filesystem.js
         mv javascript_release.zip templates/
 
