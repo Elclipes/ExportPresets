@@ -60,7 +60,7 @@ jobs:
         cd godot
         scons -j 4 p=android target=template_debug
         ls -la bin/
-        cp bin/libgodot.android.opt.debug.so platform/android/java/libs/armeabi/libgodot_android.so
+        cp bin/libgodot.android.template_debug.arm64.so platform/android/java/libs/armeabi/libgodot_android.so
         ./gradlew build
         cp platform/android/java/build/outputs/apk/java-release-unsigned.apk templates/android_debug.apk
 
