@@ -2,8 +2,8 @@ name: "Build Export Templates"
 on: push
 
 jobs:
-  build-templates:
-    name: Build All Export Templates
+  build-windows-template:
+    name: Build Windows Export Template
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -25,6 +25,11 @@ jobs:
         sudo apt-get install -y mingw-w64
         sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
     
+    - name: Create Templates Directory
+      run: |
+        cd godot
+        mkdir -p templates
+    
     - name: Build Export Template Windows
       run: |
         cd godot
@@ -38,6 +43,31 @@ jobs:
       with:
         name: windows-template
         path: godot/templates/windows_64_release.exe
+
+  build-linux-template:
+    name: Build Linux Export Template
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Clone Godot Engine Source
+      run: |
+        git clone https://github.com/godotengine/godot.git
+        cd godot
+        git checkout 4.3
+    
+    - name: Install SCons
+      run: |
+        python3 -m pip install scons
+    
+    - name: Create Templates Directory
+      run: |
+        cd godot
+        mkdir -p templates
+    
+    - name: Install UPX
+      run: sudo apt-get install -y upx
 
     - name: Build Export Template Linux
       run: |
