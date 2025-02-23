@@ -50,7 +50,7 @@ jobs:
     - name: Add POST_NOTIFICATIONS Permission
       run: |
         cd godot/platform/android/java/editor/src/main
-        echo '<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />' >> AndroidManifest.xml
+        sed -i '/<manifest/a <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />' AndroidManifest.xml
         
     - name: Build Export Android Debug
       run: |
