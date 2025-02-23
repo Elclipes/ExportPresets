@@ -25,11 +25,11 @@ jobs:
         sudo apt-get install -y mingw-w64
         sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
     
-    - name: Set Up Java 21
+    - name: Set Up Java
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
-        java-version: '21'
+        java-version: '17'
 
     - name: Install Android SDK and Tools
       run: |
