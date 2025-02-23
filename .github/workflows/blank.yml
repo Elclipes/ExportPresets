@@ -62,7 +62,9 @@ jobs:
         scons -j 4 p=android target=template_debug
         ls -la bin/ platform/android/java/lib/libs/debug/arm64-v8a
         cp platform/android/java/lib/libs/debug/arm64-v8a/libgodot_android.so platform/android/java/libs/armeabi/libgodot_android.so
+        cd platform/android/java/lib/libs/debug/arm64-v8a
         ./gradlew build
+        cd godot
         cp platform/android/java/build/outputs/apk/java-release-unsigned.apk templates/android_debug.apk
     
     - name: Upload Android Template as Artifact
