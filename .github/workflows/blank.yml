@@ -79,3 +79,9 @@ jobs:
         cd godot/platform/android/java
         ./gradlew build
         cp build/outputs/apk/java-release-unsigned.apk ../../../templates/android_debug.apk
+        
+    - name: Upload Android Template as Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-template
+        path: godot/templates/android_debug.apk
