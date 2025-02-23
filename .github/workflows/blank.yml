@@ -19,29 +19,39 @@ jobs:
       run: |
         python3 -m pip install scons
 
-    - name: Install Emscripten (for Web Export)
+    - name: Install MinGW
       run: |
         sudo apt-get update
-        sudo apt-get install -y python3-distutils
+        sudo apt-get install -y mingw-w64
+        sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
+
+    - name: Set Up Emscripten
+      run: |
         git clone https://github.com/emscripten-core/emsdk.git
         cd emsdk
-        ./emsdk install latest
+        ./emsdk install latest  # Or use a specific version
         ./emsdk activate latest
-        source ./emsdk_env.sh
-        cd ..
+        echo "EMSDK_PATH=$(pwd)" >> $GITHUB_ENV
+        echo "PATH=$(pwd)/upstream/emscripten:$(pwd):$PATH" >> $GITHUB_ENV
 
-    - name: Build Web Export Templates
+    - name: Clean Build Directory
       run: |
         cd godot
-        scons -j 4 platform=web target=template_release verbose=1
-        cp bin/godot.javascript.opt.debug.html godot.html
-        cp bin/godot.javascript.opt.debug.js godot.js
+        scons -c
+
+    - name: Build Export Template Web
+      run: |
+        cd godot
+        scons -j 4 p=web target=template_release verbose=1 use_ptrcall=yes use_threads=yes
+        ls -la bin/
+        cp bin/godot.javascript.opt.html godot.html
+        cp bin/godot.javascript.opt.js godot.js
         cp tools/html_fs/filesystem.js .
-        zip javascript_debug.zip godot.html godot.js filesystem.js
-        mv javascript_debug.zip templates/
-    
-    - name: Upload Web Export Template as Artifact
+        zip javascript_release.zip godot.html godot.js filesystem.js
+        mv javascript_release.zip templates/
+
+    - name: Upload Web Template as Artifact
       uses: actions/upload-artifact@v4
       with:
         name: web-template
-        path: godot/templates/javascript_release.zip
+        path: godot/templates/web_release.zip
