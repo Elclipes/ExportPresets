@@ -1,5 +1,3 @@
-
-
 name: "Build Export Templates"
 on: push
 
@@ -51,7 +49,7 @@ jobs:
         
     - name: Add POST_NOTIFICATIONS Permission
       run: |
-        cd godot/platform/android/java
+        cd godot/platform/android/java/editor/src/main
         sed -i '/<uses-permission android:name="android.permission.INTERNET" \/>/a \
         <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />' AndroidManifest.xml
         
