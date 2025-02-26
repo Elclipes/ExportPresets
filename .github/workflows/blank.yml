@@ -56,7 +56,7 @@ jobs:
     - name: Build Export Android Debug
       run: |
         cd godot
-        scons -j 4 p=android target=template_debug
+        scons -j 4 p=android target=template_debug arch=arm64-v8a use_llvm=yes CXXFLAGS="-std=c++17"
         ls -la bin/ platform/android/java/lib/libs/debug/arm64-v8a
         cp platform/android/java/lib/libs/debug/arm64-v8a/libgodot_android.so platform/android/java/libs/armeabi/libgodot_android.so
         cd platform/android/java
