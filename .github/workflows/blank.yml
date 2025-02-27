@@ -52,11 +52,11 @@ jobs:
         cd godot/platform/android/java/editor/src/main
         sed -i '/<uses-permission android:name="android.permission.INTERNET" \/>/a \
         <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />' AndroidManifest.xml
-        
+      #arch=arm64 use_llvm=yes CXXFLAGS="-std=c++17"
     - name: Build Export Android Debug
       run: |
         cd godot
-        scons -j 4 p=android target=template_debug arch=arm64 use_llvm=yes CXXFLAGS="-std=c++17"
+        scons -j 4 p=android target=template_debug
         ls -la bin/ platform/android/java/lib/libs/debug/arm64-v8a
         cp platform/android/java/lib/libs/debug/arm64-v8a/libgodot_android.so platform/android/java/libs/armeabi/libgodot_android.so
         cd platform/android/java
